@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>React</title>
+		<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="text/babel">
+			class Navbar extends React.Component {
+			  change(page){
+			  	this.props.change(page);
+			  }
+			  constructor(props) {
+			    super(props);
+			  }
+			  render() {
+			    return (
+					<nav className="navbar navbar-expand-lg navbar-light bg-light">
+						<div className="container">
+							<div className="navbar-brand">
+								<a className="navbar-brand" href="#">{this.props.brand}</a>
+							</div>
+							<div className="collapse navbar-collapse" id="navbarNav">
+								<ul className="navbar-nav">
+							      <li className={(this.props.currentPage === 'home') ? 'nav-item active' : 'nav-item'}>
+							        <a onClick={this.change.bind(this,'home')} className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+							      </li>
+							      <li className={(this.props.currentPage === 'about') ? 'nav-item active' : 'nav-item'}>
+							        <a onClick={this.change.bind(this,'about')} className="nav-link" href="#">About</a>
+							      </li>
+							      <li className={(this.props.currentPage === 'contact') ? 'nav-item active' : 'nav-item'}>
+							        <a onClick={this.change.bind(this,'contact')} className="nav-link" href="#">Contact</a>
+							      </li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+			    );
+			  }
+			}
+
+			class Jumbo extends React.Component {
+			  constructor(props) {
+			    super(props);
+			  }
+
+			  render() {
+			    return (
+					<div>
+						<div className="jumbotron">
+							<div className="container">
+								<h1>{this.props.heading}</h1>
+								<p className="lead">{this.props.text}</p>
+								<hr className="my-4" />
+								<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+								<p className="lead">
+								<a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+								</p>
+							</div>
+						</div>
+					</div>
+			    );
+			  }
+			}
+
+			class Page extends React.Component {
+			  constructor(props) {
+			    super(props);
+			  }
+			  render() {
+			  	var pageContent;
+			  	if(this.props.currentPage == 'home'){
+			  		pageContent = 'This is the home page';
+			  	}else if(this.props.currentPage == 'about'){
+			  		pageContent = 'This is the about page';
+			  	}else if(this.props.currentPage == 'contact'){
+			  		pageContent = 'This is the contact page';
+			  	}else{
+					pageContent = 'This is the home page';
+			  	}
+			    return (
+					<div className="container">
+						<h2>{this.props.currentPage.charAt(0).toUpperCase()
+								+ this.props.currentPage.slice(1)}</h2>
+						{pageContent}
+					</div>
+			    );
+			  }
+			}
+
+			class Theme extends React.Component {
+			  constructor(props) {
+			    super(props);
+			    this.state = { currentPage: 'home'};
+			    this.handleChange = this.handleChange.bind(this);
+			  }
+			  static defaultProps = {
+			  	brand:'ReactStrap',
+			  	heading:'Hello, World!',
+			  	text:'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.'
+			  }
+				
+			  handleChange(page){
+				this.setState({currentPage:page});
+			  }
+
+			  render() {
+			  	var jumbotron;
+			  
+				if(this.state.currentPage == 'home'){
+				  	jumbotron = <Jumbo heading={this.props.heading} text={this.props.text}/>;
+				}else{
+				  	jumbotron = '';
+				}
+				
+			    return (
+					<div>
+						<Navbar brand={this.props.brand} currentPage={this.state.currentPage} change={this.handleChange}/>
+						{jumbotron}
+						<Page currentPage={this.state.currentPage}/>
+					</div>
+			    );
+			  }
+			}
+
+			ReactDOM.render(
+				<div>
+					<Theme />
+				</div>,
+				document.getElementById('root'));
+		</script>
+	</body>
+</html>
