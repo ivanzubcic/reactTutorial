@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Square extends React.Component {
+/*class Square extends React.Component {
   render() {
     return (
       <button className={this.props.winner ? 'square-winner' : 'square'} onClick={() => this.props.onClick()}>
@@ -10,15 +10,15 @@ class Square extends React.Component {
       </button>
     );
   }
-}
+}*/
 
-/*function Square(props){
+function Square(props){
 	return(
-		<button className={this.props.winner ? 'square-winner' : 'square'} onClick={props.onClick}>
+		<button className={props.winner ? 'square-winner' : 'square'} onClick={props.onClick}>
 			{props.value}
 		</button>
 	);
-}*/
+}
 
 class Board extends React.Component {
 /*  constructor(props){
